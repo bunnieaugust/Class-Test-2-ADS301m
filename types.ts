@@ -2,6 +2,7 @@
 export enum QuestionType {
   MULTIPLE_CHOICE = 'MULTIPLE_CHOICE',
   FILL_IN_BLANK = 'FILL_IN_BLANK',
+  MULTI_WORD_BLANK = 'MULTI_WORD_BLANK',
   COMPLETE_ANSWER = 'COMPLETE_ANSWER',
 }
 
@@ -19,4 +20,5 @@ export enum GameMode {
   HOME = 'HOME',
   QUIZ = 'QUIZ',
   REVIEW = 'REVIEW',
+  RESULTS = 'RESULTS',
 }

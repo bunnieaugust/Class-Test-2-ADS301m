@@ -105,7 +105,7 @@ const QuestionDisplay = ({ question, onAnswer, isAnswered, userAnswer }: { quest
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        if (question.type === QuestionType.FILL_IN_BLANK || question.type === QuestionType.COMPLETE_ANSWER) {
+        if (question.type === QuestionType.FILL_IN_BLANK || question.type === QuestionType.COMPLETE_ANSWER || question.type === QuestionType.MULTI_WORD_BLANK) {
             setInputValue('');
             if (inputRef.current) {
                 inputRef.current.focus();
@@ -153,7 +153,7 @@ const QuestionDisplay = ({ question, onAnswer, isAnswered, userAnswer }: { quest
                     })}
                 </div>
             )}
-             {(question.type === QuestionType.FILL_IN_BLANK || question.type === QuestionType.COMPLETE_ANSWER) && (
+             {(question.type === QuestionType.FILL_IN_BLANK || question.type === QuestionType.COMPLETE_ANSWER || question.type === QuestionType.MULTI_WORD_BLANK) && (
                 <form onSubmit={handleSubmit} className="flex flex-col items-center">
                     <input
                         ref={inputRef}
@@ -161,7 +161,11 @@ const QuestionDisplay = ({ question, onAnswer, isAnswered, userAnswer }: { quest
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         disabled={isAnswered}
-                        placeholder={question.type === QuestionType.FILL_IN_BLANK ? "Type the missing word..." : "Type your full answer..."}
+                        placeholder={
+                            question.type === QuestionType.FILL_IN_BLANK ? "Type the missing word..." :
+                            question.type === QuestionType.MULTI_WORD_BLANK ? "Type the missing phrase..." :
+                            "Type your full answer..."
+                        }
                         className="w-full max-w-md p-3 text-lg text-center bg-white/70 dark:bg-gray-900/70 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all disabled:opacity-50"
                         aria-label="Your answer"
                     />

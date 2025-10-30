@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { QuestionType } from '../types';
-import { LightBulbIcon, ShuffleIcon } from './Icons';
+import { LightBulbIcon, SparklesIcon, ShuffleIcon } from './Icons';
 import { QuestionCounts } from '../App';
 
 type HomeScreenProps = {
@@ -9,13 +9,16 @@ type HomeScreenProps = {
     onStartQuiz: (type: QuestionType | 'ALL', count: number, name: string, shuffle: boolean) => void;
     questionCounts: QuestionCounts;
     onStartReview: () => void;
+    onStartToughestQuiz: () => void;
+    hasStoredMistakes: boolean;
 };
 
-export const HomeScreen = ({ onStartQuiz, questionCounts, onStartReview }: HomeScreenProps) => {
+export const HomeScreen = ({ onStartQuiz, questionCounts, onStartReview, onStartToughestQuiz, hasStoredMistakes }: HomeScreenProps) => {
     const [selectedCounts, setSelectedCounts] = useState({
         'ALL': 20,
         [QuestionType.MULTIPLE_CHOICE]: 20,
         [QuestionType.FILL_IN_BLANK]: 20,
+        [QuestionType.MULTI_WORD_BLANK]: 20,
         [QuestionType.COMPLETE_ANSWER]: 20,
     });
     const [shuffle, setShuffle] = useState(false);
@@ -27,7 +30,8 @@ export const HomeScreen = ({ onStartQuiz, questionCounts, onStartReview }: HomeS
     const modes = [
         { type: 'ALL' as 'ALL', name: 'Comprehensive Mix', description: 'All question types.' },
         { type: QuestionType.MULTIPLE_CHOICE, name: 'Multiple Choice', description: 'Test your knowledge.' },
-        { type: QuestionType.FILL_IN_BLANK, name: 'Fill in the Blanks', description: 'Recall key terms.' },
+        { type: QuestionType.FILL_IN_BLANK, name: 'Single Word Recall', description: 'Fill in one key term.' },
+        { type: QuestionType.MULTI_WORD_BLANK, name: 'Multi-Word Recall', description: 'Recall key phrases.' },
         { type: QuestionType.COMPLETE_ANSWER, name: 'Complete the Answer', description: 'Practice for essays.' },
     ];
     
@@ -61,24 +65,44 @@ export const HomeScreen = ({ onStartQuiz, questionCounts, onStartReview }: HomeS
                 </motion.p>
             </div>
 
-            <motion.div 
-                className="mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, type: 'spring' }}
-                whileHover={{ scale: 1.03, y: -5 }}
-            >
-                <button
-                    onClick={onStartReview}
-                    className="w-full flex items-center justify-center gap-3 bg-white/50 dark:bg-gray-800/50 backdrop-blur-lg border border-white/20 dark:border-gray-700/50 rounded-3xl shadow-soft-lg p-6 text-left hover:bg-white/80 dark:hover:bg-gray-700/80 transition-all"
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, type: 'spring' }}
+                    whileHover={{ scale: 1.03, y: -5 }}
                 >
-                    <LightBulbIcon className="w-10 h-10 text-yellow-500" />
-                    <div>
-                        <h2 className="text-xl font-bold text-gray-900 dark:text-white">Study Guide</h2>
-                        <p className="text-gray-600 dark:text-gray-400 mt-1">Review key concepts before you start.</p>
-                    </div>
-                </button>
-            </motion.div>
+                    <button
+                        onClick={onStartReview}
+                        className="w-full h-full flex items-center justify-center gap-3 bg-white/50 dark:bg-gray-800/50 backdrop-blur-lg border border-white/20 dark:border-gray-700/50 rounded-3xl shadow-soft-lg p-6 text-left hover:bg-white/80 dark:hover:bg-gray-700/80 transition-all"
+                    >
+                        <LightBulbIcon className="w-10 h-10 text-yellow-500 flex-shrink-0" />
+                        <div>
+                            <h2 className="text-xl font-bold text-gray-900 dark:text-white">Study Guide</h2>
+                            <p className="text-gray-600 dark:text-gray-400 mt-1">Review key concepts before you start.</p>
+                        </div>
+                    </button>
+                </motion.div>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.45, type: 'spring' }}
+                    whileHover={{ scale: 1.03, y: -5 }}
+                >
+                    <button
+                        onClick={onStartToughestQuiz}
+                        disabled={!hasStoredMistakes}
+                        className="w-full h-full flex items-center justify-center gap-3 bg-white/50 dark:bg-gray-800/50 backdrop-blur-lg border border-white/20 dark:border-gray-700/50 rounded-3xl shadow-soft-lg p-6 text-left hover:bg-white/80 dark:hover:bg-gray-700/80 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:y-0"
+                    >
+                        <SparklesIcon className="w-10 h-10 text-purple-500 flex-shrink-0" />
+                        <div>
+                            <h2 className="text-xl font-bold text-gray-900 dark:text-white">Toughest 10 Practice</h2>
+                            <p className="text-gray-600 dark:text-gray-400 mt-1">Focus on your most missed questions.</p>
+                        </div>
+                    </button>
+                </motion.div>
+            </div>
+
 
              <motion.div 
                 className="flex items-center justify-center mb-6"

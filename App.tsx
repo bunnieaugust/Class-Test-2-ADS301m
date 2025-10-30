@@ -1,5 +1,6 @@
 
 
+
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import { quizData } from './data/quizData';
@@ -8,6 +9,7 @@ import { MoonIcon, SunIcon } from './components/Icons';
 import { HomeScreen } from './components/HomeScreen';
 import { ReviewScreen } from './components/ReviewScreen';
 import { QuizScreen } from './components/QuizScreen';
+import { ResultsScreen } from './components/ResultsScreen';
 
 export type QuestionCounts = {
   [key in QuestionType | 'ALL']: number;
@@ -49,10 +51,30 @@ export default function App() {
   const [incorrectlyAnswered, setIncorrectlyAnswered] = useState<Question[]>([]);
   const [quizBackup, setQuizBackup] = useState<QuizStateBackup | null>(null);
   const [quizTitle, setQuizTitle] = useState('');
+  const [quizResults, setQuizResults] = useState({ correct: 0, total: 0 });
+  const [hasStoredMistakes, setHasStoredMistakes] = useState(false);
 
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
 
+  // FIX: Changed return type to use a string index signature `[key: string]` because JSON.parse will always produce string keys.
+  // This allows TypeScript to correctly infer types for `Object.entries` later on, resolving the arithmetic error.
+  const getMistakeCounts = useCallback((): { [key: string]: number } => {
+    try {
+      const counts = localStorage.getItem('ads301mMistakeCounts');
+      return counts ? JSON.parse(counts) : {};
+    } catch (error) {
+      console.error("Failed to parse mistake counts from localStorage", error);
+      return {};
+    }
+  }, []);
+  
+  const incrementMistakeCount = useCallback((questionId: number) => {
+      const counts = getMistakeCounts();
+      counts[questionId] = (counts[questionId] || 0) + 1;
+      localStorage.setItem('ads301mMistakeCounts', JSON.stringify(counts));
+      setHasStoredMistakes(true);
+  }, [getMistakeCounts]);
 
   useEffect(() => {
     if (isDarkMode) {
@@ -62,10 +84,16 @@ export default function App() {
     }
   }, [isDarkMode]);
 
+  useEffect(() => {
+    const counts = getMistakeCounts();
+    setHasStoredMistakes(Object.keys(counts).length > 0);
+  }, [gameMode, getMistakeCounts]);
+
   const questionCounts = useMemo<QuestionCounts>(() => {
     return {
       [QuestionType.MULTIPLE_CHOICE]: quizData.filter(q => q.type === QuestionType.MULTIPLE_CHOICE).length,
       [QuestionType.FILL_IN_BLANK]: quizData.filter(q => q.type === QuestionType.FILL_IN_BLANK).length,
+      [QuestionType.MULTI_WORD_BLANK]: quizData.filter(q => q.type === QuestionType.MULTI_WORD_BLANK).length,
       [QuestionType.COMPLETE_ANSWER]: quizData.filter(q => q.type === QuestionType.COMPLETE_ANSWER).length,
       'ALL': quizData.length,
     };
@@ -134,7 +162,6 @@ export default function App() {
         setAttemptStatus('correct');
         setCorrectCount(prev => prev + 1);
         
-        // Don't add to bonus meter during special sessions
         if (!isLockdownActive && !quizBackup) {
             const nextCorrectForBonus = correctForBonus + 1;
             if (nextCorrectForBonus >= 5) {
@@ -152,8 +179,8 @@ export default function App() {
     } else { // Incorrect Answer
         setIsShaking(true);
         setTimeout(() => setIsShaking(false), 500);
+        incrementMistakeCount(currentQuestion.id);
 
-        // Record the mistake if in lockdown, but don't force a retry.
         if (isLockdownActive) {
             if (!lockdownMistakes.some(q => q.id === currentQuestion.id)) {
                 setLockdownMistakes(prev => [...prev, currentQuestion]);
@@ -163,7 +190,6 @@ export default function App() {
         setIsAnswered(true);
         setAttemptStatus('incorrect');
         
-        // Add to the main incorrect list ONLY if not in a special session
         if (!isLockdownActive && !quizBackup) {
             if (!incorrectlyAnswered.some(q => q.id === currentQuestion.id)) {
                 setIncorrectForLockdown(prev => prev + 1);
@@ -175,17 +201,15 @@ export default function App() {
 
   const handleLockdownRoundEnd = () => {
     if (lockdownMistakes.length > 0) {
-      // Start a new round with the questions they got wrong
       const newLockdownQuestions = [...lockdownMistakes].sort(() => 0.5 - Math.random());
       setQuestions(newLockdownQuestions);
       setCurrentQuestionIndex(0);
       setUserAnswers(Array(newLockdownQuestions.length).fill(undefined));
       setAttemptStatus('idle');
       setIsAnswered(false);
-      setLockdownMistakes([]); // Clear mistakes for the new round
+      setLockdownMistakes([]);
       setQuizTitle(`🚨 Lockdown: ${newLockdownQuestions.length} left 🚨`);
     } else {
-      // They passed! End lockdown and return to the main quiz.
       endLockdown();
     }
   };
@@ -199,10 +223,11 @@ export default function App() {
     } else {
         if (isLockdownActive) {
             handleLockdownRoundEnd();
-        } else if (quizBackup) { // Was in Bonus mode
+        } else if (quizBackup) {
             endBonus();
         } else {
-            goHome();
+            setQuizResults({ correct: correctCount, total: questions.length });
+            setGameMode(GameMode.RESULTS);
         }
     }
   };
@@ -242,7 +267,6 @@ export default function App() {
   const endLockdown = () => {
     if (!quizBackup) { goHome(); return; }
 
-    // Restore quiz state from backup
     setQuestions(quizBackup.questions);
     setUserAnswers(quizBackup.userAnswers);
     setCorrectCount(quizBackup.correctCount);
@@ -250,32 +274,26 @@ export default function App() {
     setBonusCharges(quizBackup.bonusCharges);
     setQuizTitle(quizBackup.quizTitle);
     
-    // Reset lockdown specific state - they passed, so clear the incorrect list
     setIncorrectlyAnswered([]);
     setIncorrectForLockdown(0); 
     setIsLockdownActive(false);
 
-    // Determine the next step
     const nextIndex = quizBackup.index + 1;
-    setQuizBackup(null); // Clear backup now that we have the info we need
+    setQuizBackup(null); 
 
     if (nextIndex < quizBackup.questions.length) {
-        // Advance to the next question
         setCurrentQuestionIndex(nextIndex);
-        // Reset UI for the new question
         setIsAnswered(false);
         setAttemptStatus('idle');
     } else {
-        // Lockdown was triggered on the last question, so quiz is over
-        goHome();
+        setQuizResults({ correct: quizBackup.correctCount, total: quizBackup.questions.length });
+        setGameMode(GameMode.RESULTS);
     }
   }
 
   const endBonus = () => {
     if (!quizBackup) { goHome(); return; }
    
-   // Determine which questions were answered correctly during the bonus round.
-   // At this point, `questions` and `userAnswers` are from the bonus session.
    const correctlyAnsweredInBonusIds = new Set<number>();
    questions.forEach((q, index) => {
        const ans = userAnswers[index];
@@ -289,7 +307,6 @@ export default function App() {
        }
    });
 
-   // Restore the main quiz's core state from the backup.
    setQuestions(quizBackup.questions);
    setCurrentQuestionIndex(quizBackup.index);
    setUserAnswers(quizBackup.userAnswers);
@@ -298,16 +315,40 @@ export default function App() {
    setBonusCharges(quizBackup.bonusCharges);
    setQuizTitle(quizBackup.quizTitle);
    
-   // Apply the results from the bonus round to the incorrect questions list.
    const updatedIncorrectlyAnswered = quizBackup.incorrectlyAnswered.filter(
        q => !correctlyAnsweredInBonusIds.has(q.id)
    );
    setIncorrectlyAnswered(updatedIncorrectlyAnswered);
    setIncorrectForLockdown(updatedIncorrectlyAnswered.length);
    
-   // Clean up the backup.
    setQuizBackup(null);
  }
+
+ const startRetryIncorrectQuiz = () => {
+    if (incorrectlyAnswered.length === 0) return;
+    const retryQuestions = [...incorrectlyAnswered].sort(() => Math.random() - 0.5);
+    setQuestions(retryQuestions);
+    setGameMode(GameMode.QUIZ);
+    resetState(retryQuestions.length);
+    setQuizTitle("Retry Incorrect");
+  };
+  
+  const startToughestQuiz = () => {
+    const counts = getMistakeCounts();
+    if (Object.keys(counts).length === 0) return;
+  
+    const sortedMistakes = Object.entries(counts).sort(([, a], [, b]) => b - a);
+    const toughestIds = sortedMistakes.slice(0, 10).map(([id]) => parseInt(id, 10));
+    
+    const toughestQuestions = quizData.filter(q => toughestIds.includes(q.id));
+    
+    if (toughestQuestions.length === 0) return;
+  
+    setQuestions(toughestQuestions.sort(() => Math.random() - 0.5));
+    setGameMode(GameMode.QUIZ);
+    resetState(toughestQuestions.length);
+    setQuizTitle("Toughest 10 Practice");
+  };
 
   useEffect(() => {
     if (incorrectForLockdown > 4 && !isLockdownActive && gameMode === GameMode.QUIZ && !quizBackup) {
@@ -335,10 +376,26 @@ export default function App() {
         >
             <AnimatePresence mode="wait">
             {gameMode === GameMode.HOME && (
-                <HomeScreen key="home" onStartQuiz={startQuiz} questionCounts={questionCounts} onStartReview={startReview} />
+                <HomeScreen 
+                    key="home" 
+                    onStartQuiz={startQuiz} 
+                    questionCounts={questionCounts} 
+                    onStartReview={startReview}
+                    onStartToughestQuiz={startToughestQuiz}
+                    hasStoredMistakes={hasStoredMistakes} 
+                />
             )}
             {gameMode === GameMode.REVIEW && (
                 <ReviewScreen key="review" onHome={goHome} />
+            )}
+            {gameMode === GameMode.RESULTS && (
+                <ResultsScreen 
+                  key="results"
+                  onHome={goHome}
+                  onRetry={startRetryIncorrectQuiz}
+                  results={quizResults}
+                  hasIncorrect={incorrectlyAnswered.length > 0}
+                />
             )}
             {gameMode === GameMode.QUIZ && currentQuestion && (
                 <QuizScreen 

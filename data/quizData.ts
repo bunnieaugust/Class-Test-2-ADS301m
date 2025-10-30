@@ -672,13 +672,6 @@ export const quizData: Question[] = [
     explanation: "The table of content on page 5 and the title slide on page 3 clearly state these two main topics."
   },
   {
-    id: 101,
-    type: QuestionType.FILL_IN_BLANK,
-    question: "ASO stands for App Store ___.",
-    answer: "Optimization",
-    explanation: "ASO stands for App Store Optimization, the process of improving app visibility in app stores (Page 6)."
-  },
-  {
     id: 102,
     type: QuestionType.FILL_IN_BLANK,
     question: "App SEO allows you to acquire additional traffic ___ of what the app store themselves provide.",
@@ -714,20 +707,6 @@ export const quizData: Question[] = [
     explanation: "Users acquired organically through ASO tend to be more valuable over their lifetime compared to those acquired through paid ads (Page 7)."
   },
   {
-    id: 140,
-    type: QuestionType.FILL_IN_BLANK,
-    question: "LTV stands for ___ Value.",
-    answer: "Lifetime",
-    explanation: "Lifetime Value (LTV) is a metric that estimates the total revenue a business can reasonably expect from a single customer account (Page 7)."
-  },
-  {
-    id: 152,
-    type: QuestionType.FILL_IN_BLANK,
-    question: "External App SEO can lead to lower paid ad ___.",
-    answer: "spending",
-    explanation: "By increasing organic traffic from outside the store, you can reduce your reliance on and budget for paid advertising (Page 7)."
-  },
-  {
     id: 162,
     type: QuestionType.FILL_IN_BLANK,
     question: "External SEO can help you save money on ___ fees.",
@@ -740,13 +719,6 @@ export const quizData: Question[] = [
     question: "An ASO benefit is a 35-40% ___ in organic downloads over time.",
     answer: "uplift",
     explanation: "The word 'uplift' is used on page 7 to describe the increase in organic downloads from ASO efforts."
-  },
-  {
-    id: 103,
-    type: QuestionType.FILL_IN_BLANK,
-    question: "One of the External App SEO methods is to have a content ___ strategy.",
-    answer: "marketing",
-    explanation: "A content marketing strategy, such as a blog or feature pages, can drive traffic and awareness to your app from outside the app store (Page 8)."
   },
   {
     id: 141,
@@ -763,25 +735,11 @@ export const quizData: Question[] = [
     explanation: "This is given as a reason for having a website for your app, as it provides a familiar and comfortable environment for users to learn more (Page 8)."
   },
   {
-    id: 104,
-    type: QuestionType.FILL_IN_BLANK,
-    question: "When participating in online communities, you should be a contributing member, not just an ___.",
-    answer: "advertisement",
-    explanation: "Providing value and contributing to discussions in online communities builds trust and is more effective than direct advertising (Page 11)."
-  },
-  {
     id: 116,
     type: QuestionType.FILL_IN_BLANK,
     question: "Keyword tags are a specific ASO element for the ___ operating system.",
     answer: "iOS",
     explanation: "The presentation explicitly mentions that keyword tags are an ASO element for iOS only (Page 12)."
-  },
-  {
-    id: 124,
-    type: QuestionType.FILL_IN_BLANK,
-    question: "A good app title should include the brand name and relevant ___.",
-    answer: "keywords",
-    explanation: "Combining the brand name with relevant keywords in the app title is a fundamental ASO practice (Page 13)."
   },
   {
     id: 125,
@@ -833,13 +791,6 @@ export const quizData: Question[] = [
     explanation: "The text in your description is a key piece of metadata that app stores use to understand and categorize your app (Page 17)."
   },
   {
-    id: 105,
-    type: QuestionType.FILL_IN_BLANK,
-    question: "For app descriptions, adding relevant social ___ can help create trust in the app and your brand.",
-    answer: "proof",
-    explanation: "Social proof, such as testimonials, awards, or positive reviews mentioned in the description, can build user trust (Page 18)."
-  },
-  {
     id: 128,
     type: QuestionType.FILL_IN_BLANK,
     question: "One of the key engagement metrics for ASO is the speed of the ___.",
@@ -873,13 +824,6 @@ export const quizData: Question[] = [
     question: "Infrequent ___ can be a sign of a low-quality app.",
     answer: "updates",
     explanation: "App stores may penalize apps that are not updated regularly, as it can indicate neglect or poor maintenance (Page 20)."
-  },
-  {
-    id: 164,
-    type: QuestionType.FILL_IN_BLANK,
-    question: "The 'Rank Position and Downloads' chart shows your ___ ranking per country.",
-    answer: "organic",
-    explanation: "The ASO tool screenshot on page 21 is designed to track organic keyword rankings within the app store."
   },
   {
     id: 107,
@@ -973,13 +917,6 @@ export const quizData: Question[] = [
     explanation: "This incredibly short timeframe highlights why the initial visual impression is so critical (Page 26)."
   },
   {
-    id: 110,
-    type: QuestionType.FILL_IN_BLANK,
-    question: "KPI stands for Key Performance ___.",
-    answer: "Indicator",
-    explanation: "A Key Performance Indicator is a measurable value that demonstrates how effectively a company is achieving key business objectives (Page 27)."
-  },
-  {
     id: 111,
     type: QuestionType.FILL_IN_BLANK,
     question: "SEO is a ___-term investment.",
@@ -1001,39 +938,11 @@ export const quizData: Question[] = [
     explanation: "By setting and tracking KPIs, you can manage the expectations of stakeholders regarding SEO timelines and results (Page 27)."
   },
   {
-    id: 112,
-    type: QuestionType.FILL_IN_BLANK,
-    question: "A KPI for organic traffic that measures people who have not yet visited your site is called ___ users.",
-    answer: "New",
-    explanation: "Tracking 'New users' helps you understand the growth of your audience and the reach of your SEO efforts (Page 28)."
-  },
-  {
     id: 132,
     type: QuestionType.FILL_IN_BLANK,
     question: "The KPI 'Users' refers to people who have visited your site ___ within a specified period.",
     answer: "once",
     explanation: "This defines a unique user within the selected time frame for reporting in tools like Google Analytics (Page 28)."
-  },
-  {
-    id: 167,
-    type: QuestionType.FILL_IN_BLANK,
-    question: "Branded Traffic is a KPI that is often compared against ___ Traffic.",
-    answer: "Unbranded",
-    explanation: "This comparison helps differentiate users who know your brand from those who discover you through general search terms (Page 29)."
-  },
-  {
-    id: 120,
-    type: QuestionType.FILL_IN_BLANK,
-    question: "Backlinks from low quality or ___ domains can harm your SEO.",
-    answer: "toxic",
-    explanation: "Part of backlink management is identifying and disavowing links from spammy or 'toxic' sites that can negatively impact your rankings (Page 30)."
-  },
-  {
-    id: 146,
-    type: QuestionType.FILL_IN_BLANK,
-    question: "One Backlinks KPI is the total number of referring ___.",
-    answer: "domains",
-    explanation: "This KPI measures the number of unique websites linking to you, which is often more important than the total number of links (Page 30)."
   },
   {
     id: 156,
@@ -1050,39 +959,11 @@ export const quizData: Question[] = [
     explanation: "This is the most basic backlink metric, counting every single link pointing to your site (Page 30)."
   },
   {
-    id: 138,
-    type: QuestionType.FILL_IN_BLANK,
-    question: "CTR stands for ___-through-rate.",
-    answer: "Click",
-    explanation: "CTR, or Click-through-rate, is the percentage of people who click on your link after seeing it in search results (Page 31, 41)."
-  },
-  {
-    id: 168,
-    type: QuestionType.FILL_IN_BLANK,
-    question: "A KPI that measures site health is Page (HTML) Load ___.",
-    answer: "Speed",
-    explanation: "The Site Performance report on page 32 shows Page (HTML) Load Speed as a key metric for user experience and SEO."
-  },
-  {
     id: 147,
     type: QuestionType.FILL_IN_BLANK,
     question: "The SEO survey findings focused on ___ solving.",
     answer: "problem",
     explanation: "The survey was designed to understand challenges and focus on problem-solving, which is why it skews negative (Page 33)."
-  },
-  {
-    id: 133,
-    type: QuestionType.FILL_IN_BLANK,
-    question: "The biggest SEO business challenge, at 40%, is Prioritization & ___.",
-    answer: "Implementation",
-    explanation: "Getting SEO changes actually implemented by development or content teams is the most common hurdle for professionals (Page 34)."
-  },
-  {
-    id: 148,
-    type: QuestionType.FILL_IN_BLANK,
-    question: "The second biggest SEO challenge was 'Putting out ___'.",
-    answer: "fires",
-    explanation: "This refers to the reactive, day-to-day problem-solving that takes up a significant amount of an SEO's time (Page 34)."
   },
   {
     id: 169,
@@ -1169,13 +1050,6 @@ export const quizData: Question[] = [
     explanation: "It's important not to underestimate competitors, as their SEO capabilities could improve rapidly with new investment or focus (Page 38)."
   },
   {
-    id: 119,
-    type: QuestionType.FILL_IN_BLANK,
-    question: "Using Google ___ can help you analyze the popularity of search terms over time.",
-    answer: "Trends",
-    explanation: "Google Trends is the tool specifically designed for analyzing and comparing the interest in keywords over time (Page 39)."
-  },
-  {
     id: 158,
     type: QuestionType.FILL_IN_BLANK,
     question: "Excel to Power BI is an example of a data ___ tool.",
@@ -1197,25 +1071,718 @@ export const quizData: Question[] = [
     explanation: "The graph on page 41 shows the second position has a click-through rate of 24.71%."
   },
   {
-    id: 171,
-    type: QuestionType.FILL_IN_BLANK,
-    question: "Advanced ___ Ranking is the name of the tool shown on page 42.",
-    answer: "Web",
-    explanation: "The graph on page 42 is branded with the 'Advanced WEB RANKING' logo."
-  },
-  {
-    id: 139,
-    type: QuestionType.FILL_IN_BLANK,
-    question: "The Google Search Console screenshot shows a full ___ export.",
-    answer: "keyword",
-    explanation: "Google Search Console is the primary tool for exporting a list of keywords your site is ranking for, along with performance data (Page 43)."
-  },
-  {
     id: 180,
     type: QuestionType.FILL_IN_BLANK,
     question: "The final slide of the presentation says 'Thank you for your ___!'.",
     answer: "attention",
     explanation: "The presentation concludes with a thank you slide (Page 44)."
+  },
+  // =============================================
+  // Newly Added Fill in the Blank Questions - 20 Questions
+  // =============================================
+  {
+    id: 181,
+    type: QuestionType.FILL_IN_BLANK,
+    question: "The primary goal of ASO is to rank ___ in the app stores themselves.",
+    answer: "highly",
+    explanation: "ASO, or App Store Optimization, is the process of improving an app's visibility to rank highly within app stores like the Apple App Store or Google Play (Page 6)."
+  },
+  {
+    id: 182,
+    type: QuestionType.FILL_IN_BLANK,
+    question: "Good ASO benefits other paid ___ strategies.",
+    answer: "UA",
+    explanation: "Good ASO increases the LTV of users and lowers the cost of paid ads, making other paid User Acquisition (UA) strategies more effective (Page 7)."
+  },
+  {
+    id: 183,
+    type: QuestionType.FILL_IN_BLANK,
+    question: "An External App SEO method is to participate in Online ___.",
+    answer: "communities",
+    explanation: "Engaging with potential users in online communities is an effective method for External App SEO to build awareness and trust (Page 8)."
+  },
+  {
+    id: 184,
+    type: QuestionType.FILL_IN_BLANK,
+    question: "The content marketing example for the fishing app was designed to lead to an app ___.",
+    answer: "download",
+    explanation: "The diagram on page 9 shows that the goal of creating blog topics and feature pages is to funnel users towards downloading the app."
+  },
+  {
+    id: 185,
+    type: QuestionType.FILL_IN_BLANK,
+    question: "For community management, you should ___ what people are saying about your app.",
+    answer: "monitor",
+    explanation: "The presentation advises that you should both monitor what is being said about your app and actively participate in online communities (Page 11)."
+  },
+  {
+    id: 186,
+    type: QuestionType.FILL_IN_BLANK,
+    question: "A strong app title should include the brand name and relevant ___.",
+    answer: "keywords",
+    explanation: "Including both the brand name and relevant keywords in the title is a key ASO strategy to improve discoverability (Page 13)."
+  },
+  {
+    id: 187,
+    type: QuestionType.FILL_IN_BLANK,
+    question: "Google Play allows for a ___ that appears directly below the app name in search results.",
+    answer: "subtitle",
+    explanation: "The comparison on page 16 shows that Google Play allows a subtitle, which provides an extra opportunity for keywords and compelling copy in search results."
+  },
+  {
+    id: 188,
+    type: QuestionType.FILL_IN_BLANK,
+    question: "Apple requires app descriptions to include information on ___-___ purchases.",
+    answer: "in-app",
+    explanation: "Page 17 explicitly states that Apple requires information on in-app purchases and billing requirements to be included in the app description."
+  },
+  {
+    id: 189,
+    type: QuestionType.FILL_IN_BLANK,
+    question: "Adding social proof to a description helps to create ___ in the app and your brand.",
+    answer: "trust",
+    explanation: "Social proof, like testimonials or awards, creates trust, making users more confident in their decision to download (Page 18)."
+  },
+  {
+    id: 190,
+    type: QuestionType.FILL_IN_BLANK,
+    question: "Positive ___ and reviews are a key engagement metric for ASO.",
+    answer: "ratings",
+    explanation: "Ratings and reviews are a direct signal of user satisfaction and app quality, which app stores use as a ranking factor (Page 19)."
+  },
+  {
+    id: 191,
+    type: QuestionType.FILL_IN_BLANK,
+    question: "A/B testing involves creating different ___ of your app's store listing.",
+    answer: "versions",
+    explanation: "The purpose of A/B testing is to test different versions (or variations) of app store listings to see which one performs better in terms of conversions (Page 22)."
+  },
+  {
+    id: 192,
+    type: QuestionType.FILL_IN_BLANK,
+    question: "Google Play allows testing up to ___ variations of visuals.",
+    answer: "4",
+    explanation: "The App Store Requirements on page 24 specify that Google Play allows for A/B testing of up to 4 variations of visuals like screenshots."
+  },
+  {
+    id: 193,
+    type: QuestionType.FILL_IN_BLANK,
+    question: "Optimizing your screenshots is considered the first step in user ___.",
+    answer: "onboarding",
+    explanation: "The presentation frames the app store page as the first step of onboarding, as it sets user expectations before they even download the app (Page 25)."
+  },
+  {
+    id: 194,
+    type: QuestionType.FILL_IN_BLANK,
+    question: "The 'New users' KPI helps you measure audience growth and ___.",
+    answer: "reach",
+    explanation: "Tracking 'New users' specifically shows how many people are discovering your site for the first time, indicating the effectiveness of your SEO in reaching a wider audience (Page 28)."
+  },
+  {
+    id: 195,
+    type: QuestionType.FILL_IN_BLANK,
+    question: "Branded traffic comes from users who search for your company by ___.",
+    answer: "name",
+    explanation: "This KPI helps distinguish between users who search for you by name (branded) and those who find you through general terms (unbranded) (Page 29)."
+  },
+  {
+    id: 196,
+    type: QuestionType.FILL_IN_BLANK,
+    question: "Getting links from many unique websites is measured by the KPI 'Total number of referring ___'.",
+    answer: "domains",
+    explanation: "This KPI is important because getting links from many different high-quality domains is more valuable than getting many links from a single domain (Page 30)."
+  },
+  {
+    id: 197,
+    type: QuestionType.FILL_IN_BLANK,
+    question: "The metric 'Total ___' represents how many times your site appeared in search results.",
+    answer: "impressions",
+    explanation: "Total impressions is a key metric from Google Search Console that indicates the visibility of your website on the search results page (Page 31)."
+  },
+  {
+    id: 198,
+    type: QuestionType.FILL_IN_BLANK,
+    question: "The Site Performance report can show ___ and Warnings related to load speed.",
+    answer: "Errors",
+    explanation: "The Site Performance report on page 32 shows Performance Issues which are broken down into Errors and Warnings."
+  },
+  {
+    id: 199,
+    type: QuestionType.FILL_IN_BLANK,
+    question: "The third biggest SEO Business Challenge was 'Cross Functional ___' at 20%.",
+    answer: "Compatability",
+    explanation: "The pie chart on page 34 shows that 'Cross Functional Compatability' accounted for 20% of the challenges."
+  },
+  {
+    id: 200,
+    type: QuestionType.FILL_IN_BLANK,
+    question: "Google Search Console provides performance data like impressions, clicks, CTR, and average ___.",
+    answer: "position",
+    explanation: "As shown on page 43, Google Search Console is the tool that provides detailed keyword-level data, including impressions, clicks, CTR, and average position."
+  },
+    
+  // =============================================
+  // Multi Word Blank Questions - 80 Questions
+  // =============================================
+  {
+    id: 101,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "ASO stands for ___ ___ ___.",
+    answer: "App Store Optimization",
+    explanation: "ASO stands for App Store Optimization, the process of improving app visibility in app stores (Page 6)."
+  },
+  {
+    id: 140,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "LTV stands for ___.",
+    answer: "Lifetime Value",
+    explanation: "Lifetime Value (LTV) is a metric that estimates the total revenue a business can reasonably expect from a single customer account (Page 7)."
+  },
+  {
+    id: 152,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "External App SEO can lead to lower ___ ___ ___.",
+    answer: "paid ad spending",
+    explanation: "By increasing organic traffic from outside the store, you can reduce your reliance on and budget for paid advertising (Page 7)."
+  },
+  {
+    id: 103,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "One External App SEO method is a ___ ___ ___.",
+    answer: "content marketing strategy",
+    explanation: "A content marketing strategy, such as a blog or feature pages, can drive traffic and awareness to your app from outside the app store (Page 8)."
+  },
+  {
+    id: 104,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "In online communities, be a ___ ___, not an advertisement.",
+    answer: "contributing member",
+    explanation: "Providing value and contributing to discussions in online communities builds trust and is more effective than direct advertising (Page 11)."
+  },
+  {
+    id: 124,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "A good app title includes the brand name and ___ ___.",
+    answer: "relevant keywords",
+    explanation: "Combining the brand name with relevant keywords in the app title is a fundamental ASO practice (Page 13)."
+  },
+  {
+    id: 105,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "Adding ___ ___ to descriptions creates trust.",
+    answer: "social proof",
+    explanation: "Social proof, such as testimonials, awards, or positive reviews mentioned in the description, can build user trust (Page 18)."
+  },
+  {
+    id: 110,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "KPI stands for ___ ___ ___.",
+    answer: "Key Performance Indicator",
+    explanation: "A Key Performance Indicator is a measurable value that demonstrates how effectively a company is achieving key business objectives (Page 27)."
+  },
+  {
+    id: 112,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "A KPI for first-time visitors is ___ ___.",
+    answer: "New users",
+    explanation: "Tracking 'New users' helps you understand the growth of your audience and the reach of your SEO efforts (Page 28)."
+  },
+  {
+    id: 167,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "A key KPI comparison is Branded Traffic vs. ___ ___.",
+    answer: "Unbranded Traffic",
+    explanation: "This comparison helps differentiate users who know your brand from those who discover you through general search terms (Page 29)."
+  },
+  {
+    id: 120,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "Backlinks from ___ ___ or toxic domains can harm your SEO.",
+    answer: "low quality",
+    explanation: "Part of backlink management is identifying and disavowing links from spammy or 'toxic' sites that can negatively impact your rankings (Page 30)."
+  },
+  {
+    id: 146,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "A key backlink KPI is the total number of ___ ___.",
+    answer: "referring domains",
+    explanation: "This KPI measures the number of unique websites linking to you, which is often more important than the total number of links (Page 30)."
+  },
+  {
+    id: 138,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "CTR stands for ___ ___.",
+    answer: "Click-through rate",
+    explanation: "CTR, or Click-through-rate, is the percentage of people who click on your link after seeing it in search results (Page 31, 41)."
+  },
+  {
+    id: 168,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "A site health KPI is ___ ___ ___ ___.",
+    answer: "Page (HTML) Load Speed",
+    explanation: "The Site Performance report on page 32 shows Page (HTML) Load Speed as a key metric for user experience and SEO."
+  },
+  {
+    id: 133,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "The biggest SEO challenge is ___ & ___.",
+    answer: "Prioritization & Implementation",
+    explanation: "Getting SEO changes actually implemented by development or content teams is the most common hurdle for professionals (Page 34)."
+  },
+  {
+    id: 148,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "The second biggest SEO challenge was ___ ___ ___.",
+    answer: "Putting out fires",
+    explanation: "This refers to the reactive, day-to-day problem-solving that takes up a significant amount of an SEO's time (Page 34)."
+  },
+  {
+    id: 119,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "Use ___ ___ to analyze search term popularity over time.",
+    answer: "Google Trends",
+    explanation: "Google Trends is the tool specifically designed for analyzing and comparing the interest in keywords over time (Page 39)."
+  },
+  {
+    id: 171,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "___ ___ ___ is the name of the tool on page 42.",
+    answer: "Advanced Web Ranking",
+    explanation: "The graph on page 42 is branded with the 'Advanced WEB RANKING' logo."
+  },
+  {
+    id: 139,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "GSC provides a full ___ ___.",
+    answer: "keyword export",
+    explanation: "Google Search Console is the primary tool for exporting a list of keywords your site is ranking for, along with performance data (Page 43)."
+  },
+  {
+    id: 164,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "ASO tools can show your ___ ___ per country.",
+    answer: "organic ranking",
+    explanation: "The ASO tool screenshot on page 21 is designed to track organic keyword rankings within the app store."
+  },
+  {
+    id: 301,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "The first slide of the presentation identifies the ___ ___.",
+    answer: "course code",
+    explanation: "The first slide of the presentation identifies the course code as ADS301m (Page 1)."
+  },
+  {
+    id: 302,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "The presentation's two main topics are Mobile/App SEO and ___ & ___.",
+    answer: "Metrics & KPIs",
+    explanation: "The table of content on page 5 and the title slide on page 3 clearly state these two main topics."
+  },
+  {
+    id: 303,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "App SEO focuses on driving traffic from sources like web search and ___ ___.",
+    answer: "social media",
+    explanation: "External App SEO focuses on driving traffic from sources other than the app store, like web search, social media, or referrals (Page 6)."
+  },
+  {
+    id: 304,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "External SEO helps you develop ___ ___ outside of the app store.",
+    answer: "brand awareness",
+    explanation: "A key benefit of External SEO is building brand awareness and visibility in places other than the app store itself (Page 6)."
+  },
+  {
+    id: 305,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "ASO helps increase your presence when users are searching with ___ ___.",
+    answer: "specific keywords",
+    explanation: "ASO is about being visible where users are actively searching, either by category or specific keywords (Page 6)."
+  },
+  {
+    id: 306,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "ASO's primary goal is to rank well in ___ ___ ___ ___.",
+    answer: "app store search results",
+    explanation: "This statistic underscores the importance of ranking well in app store search results, which is the primary goal of ASO (Page 7)."
+  },
+  {
+    id: 307,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "The value of organic users is measured by their ___ ___.",
+    answer: "lifetime value",
+    explanation: "Users acquired organically through ASO tend to be more valuable over their lifetime compared to those acquired through paid ads (Page 7)."
+  },
+  {
+    id: 308,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "By driving external traffic, you can bypass the app store's ___ ___.",
+    answer: "commission fees",
+    explanation: "By driving traffic and potential sales from outside the app store, you can bypass the store's commission fees on transactions (Page 7)."
+  },
+  {
+    id: 309,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "Consistent ASO efforts can lead to an increase in ___ ___.",
+    answer: "organic downloads",
+    explanation: "The word 'uplift' is used on page 7 to describe the increase in organic downloads from ASO efforts."
+  },
+  {
+    id: 310,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "Using reviews and testimonials is a powerful form of ___ ___.",
+    answer: "social proof",
+    explanation: "Leveraging positive feedback from users, like reviews and testimonials, is a powerful form of social proof for External SEO (Page 8)."
+  },
+  {
+    id: 311,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "A website for your app provides a ___ and ___ environment for users.",
+    answer: "familiar and comfortable",
+    explanation: "This is given as a reason for having a website for your app, as it provides a familiar and comfortable environment for users to learn more (Page 8)."
+  },
+  {
+    id: 312,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "ASO elements like ___ ___ are for iOS only.",
+    answer: "keyword tags",
+    explanation: "The presentation explicitly mentions that keyword tags are an ASO element for iOS only (Page 12)."
+  },
+  {
+    id: 313,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "Good keywords are easy for both ___ and ___ to understand.",
+    answer: "users and algorithms",
+    explanation: "Clarity and simplicity are key for ASO keywords, making them easy for both users and algorithms to understand (Page 14)."
+  },
+  {
+    id: 314,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "An important ASO tactic is to make full use of the available ___ ___.",
+    answer: "character limits",
+    explanation: "Making full use of the available character limits for keywords is an important optimization tactic (Page 14)."
+  },
+  {
+    id: 315,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "Using unique keywords helps you ___ ___ from the competition.",
+    answer: "stand out",
+    explanation: "Unique keywords help you stand out from the competition (Page 14)."
+  },
+  {
+    id: 316,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "Using synonyms helps you capture a wider range of ___ ___.",
+    answer: "search terms",
+    explanation: "Thinking about synonyms helps you capture a wider range of search terms that users might use to find an app like yours (Page 15)."
+  },
+  {
+    id: 317,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "The first step in ASO keyword research is to identify your app's ___ ___.",
+    answer: "main features",
+    explanation: "Understanding the main features is the first step listed in the keyword research process (Page 15)."
+  },
+  {
+    id: 318,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "The Apple App Store description format is designed for quickly ___ ___.",
+    answer: "grabbing attention",
+    explanation: "Given the short time users spend on a listing, Apple's description format is geared towards quickly grabbing attention (Page 16)."
+  },
+  {
+    id: 319,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "App stores use the description to ___ and ___ your app.",
+    answer: "understand and categorize",
+    explanation: "The text in your description is a key piece of metadata that app stores use to understand and categorize your app (Page 17)."
+  },
+  {
+    id: 320,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "A slow app leads to a ___ ___ ___ and can negatively affect rankings.",
+    answer: "bad user experience",
+    explanation: "A slow or poorly performing app leads to a bad user experience, which can negatively affect rankings (Page 19)."
+  },
+  {
+    id: 321,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "External links signal ___ and ___ to app stores.",
+    answer: "authority and popularity",
+    explanation: "External links signal authority and popularity to app stores, functioning similarly to backlinks for a website (Page 19)."
+  },
+  {
+    id: 322,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "Apps can be removed from app stores if they don't meet ___ ___.",
+    answer: "quality guidelines",
+    explanation: "App stores have quality guidelines, and apps that have high crash rates, infrequent updates, or are buggy can be removed (Page 20)."
+  },
+  {
+    id: 323,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "Apps that crash frequently are flagged as ___ ___ by app stores.",
+    answer: "low quality",
+    explanation: "Apps that crash frequently provide a poor user experience and are flagged as low quality by app stores (Page 20)."
+  },
+  {
+    id: 324,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "Infrequent updates can indicate neglect or ___ ___.",
+    answer: "poor maintenance",
+    explanation: "App stores may penalize apps that are not updated regularly, as it can indicate neglect or poor maintenance (Page 20)."
+  },
+  {
+    id: 325,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "For A/B testing, Google Play shows different versions of your ___ ___ to users.",
+    answer: "store listing",
+    explanation: "Google Play's A/B testing tools automatically segment users to show them different versions of your store listing (Page 22)."
+  },
+  {
+    id: 326,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "When A/B testing, remember that user behavior can vary across ___ and ___.",
+    answer: "devices and stores",
+    explanation: "This is a key consideration for A/B testing; user behavior can vary significantly between the Apple App Store and Google Play, or on different devices (Page 22)."
+  },
+  {
+    id: 327,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "The A/B test example on page 23 was an experiment called 'New utility + ___ ___'.",
+    answer: "catch data",
+    explanation: "The graph on page 23 is titled 'New utility + catch data', representing the experiment being run."
+  },
+  {
+    id: 328,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "The Apple App Store allows up to three ___ ___.",
+    answer: "localized videos",
+    explanation: "Apple allows for up to 3 localized videos on an app store page (Page 24)."
+  },
+  {
+    id: 329,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "Google Play requires a ___ ___ of 2 screenshots.",
+    answer: "minimum number",
+    explanation: "While you can have up to 8 screenshots on Google Play, you must have at least 2 (Page 24)."
+  },
+  {
+    id: 330,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "Apple has a strict 30-second limit for each ___ ___.",
+    answer: "preview video",
+    explanation: "Apple has a strict 30-second limit for each preview video (Page 24)."
+  },
+  {
+    id: 331,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "Google Play allows videos up to ___ ___ long.",
+    answer: "2 minutes",
+    explanation: "Google Play offers more flexibility, allowing videos up to 2 minutes long (Page 24)."
+  },
+  {
+    id: 332,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "Apple video previews must be ___ ___ of the app in use.",
+    answer: "screen captures",
+    explanation: "Apple's guidelines require that video previews are screen captures of the app in use, not cinematic ads (Page 24)."
+  },
+  {
+    id: 333,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "Providing a promotional video is often required to get a ___ ___ on Google Play.",
+    answer: "feature placement",
+    explanation: "To get a feature placement on Google Play, providing a promotional video is often a requirement (Page 24)."
+  },
+  {
+    id: 334,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "Optimizing your screenshots is a key factor for improving the ___ ___.",
+    answer: "conversion rate",
+    explanation: "Compelling screenshots are a key factor in convincing users to download the app, thus improving the conversion rate (Page 25)."
+  },
+  {
+    id: 335,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "Your videos and screenshots are critical for forming a positive ___ ___.",
+    answer: "first impression",
+    explanation: "These visual elements are the first thing a potential user interacts with, making them critical for forming a positive first impression (Page 25)."
+  },
+  {
+    id: 336,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "It's important to make a strong impression with the first two screenshots because only 9% of users ___ ___ them.",
+    answer: "scroll past",
+    explanation: "This statistic highlights the critical importance of making a strong impression with the very first visual elements a user sees (Page 26)."
+  },
+  {
+    id: 337,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "The initial ___ ___ is critical because users make download decisions in just 7 seconds.",
+    answer: "visual impression",
+    explanation: "This incredibly short timeframe highlights why the initial visual impression is so critical (Page 26)."
+  },
+  {
+    id: 338,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "SEO is considered a ___-___ ___ because results are not immediate.",
+    answer: "long-term investment",
+    explanation: "The effects of SEO efforts are not immediate; they build over time, making it a long-term investment (Page 27)."
+  },
+  {
+    id: 339,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "KPIs provide ___ ___ to show the value of your SEO efforts.",
+    answer: "concrete data",
+    explanation: "KPIs provide concrete data to show the impact and value of your SEO efforts to stakeholders (Page 27)."
+  },
+  {
+    id: 340,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "You can ___ the ___ of stakeholders by setting and tracking KPIs.",
+    answer: "manage the expectations",
+    explanation: "By setting and tracking KPIs, you can manage the expectations of stakeholders regarding SEO timelines and results (Page 27)."
+  },
+  {
+    id: 341,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "The 'Users' KPI defines a ___ ___ within the selected time frame.",
+    answer: "unique user",
+    explanation: "This defines a unique user within the selected time frame for reporting in tools like Google Analytics (Page 28)."
+  },
+  {
+    id: 342,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "A key backlink indicator is tracking the rate of new ___ ___.",
+    answer: "link acquisition",
+    explanation: "Tracking the rate of new link acquisition is a key indicator of the success of your off-page SEO and content marketing efforts (Page 30)."
+  },
+  {
+    id: 343,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "The most basic backlink metric is the ___ ___ of links.",
+    answer: "total number",
+    explanation: "This is the most basic backlink metric, counting every single link pointing to your site (Page 30)."
+  },
+  {
+    id: 344,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "The SEO survey focused on understanding challenges and ___ ___.",
+    answer: "problem-solving",
+    explanation: "The survey was designed to understand challenges and focus on problem-solving, which is why it skews negative (Page 33)."
+  },
+  {
+    id: 345,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "In the SEO challenges survey, ___ ___ accounted for 10% of responses.",
+    answer: "Setting Expectations",
+    explanation: "The yellow slice of the pie chart, representing 'Setting Expectations', is labeled as 10% (Page 34)."
+  },
+  {
+    id: 346,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "An SEO forecast helps guide efforts and set expectations for ___ ___.",
+    answer: "value creation",
+    explanation: "A forecast acts as a strategic plan or roadmap, guiding efforts and setting expectations for value creation (Page 35)."
+  },
+  {
+    id: 347,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "A key reason to forecast is to get ___ and ___ for new projects.",
+    answer: "buy-in and investment",
+    explanation: "A solid forecast helps convince management and stakeholders to provide the necessary support and investment for new projects (Page 35)."
+  },
+  {
+    id: 348,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "The forecasting scenario that represents the most likely outcome is called the ___ ___.",
+    answer: "Base Case",
+    explanation: "A Base Case represents the most likely outcome, which is assigned a 50% probability (Page 36)."
+  },
+  {
+    id: 349,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "The most optimistic forecasting scenario with the lowest probability is the ___ ___.",
+    answer: "Aggressive Case",
+    explanation: "This is the most optimistic, 'stretch goal' forecast, and thus has the lowest probability of being achieved (Page 36)."
+  },
+  {
+    id: 350,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "The safest, most likely to be achieved forecasting scenario is the ___ ___.",
+    answer: "Conservative Case",
+    explanation: "This is the safest, most likely to be achieved forecast, hence the high probability (Page 36)."
+  },
+  {
+    id: 351,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "A realistic forecast must include projections of the ___ ___ needed.",
+    answer: "upcoming resources",
+    explanation: "To be realistic, a forecast must account for the resources (budget, personnel, tools) required to achieve the projected results (Page 37)."
+  },
+  {
+    id: 352,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "A forecast should include an analysis of the ___ ___ and share.",
+    answer: "market size",
+    explanation: "Understanding your total addressable market and current share is crucial for realistic forecasting (Page 37)."
+  },
+  {
+    id: 353,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "Projecting future traffic requires reviewing historical ___ ___.",
+    answer: "keyword volumes",
+    explanation: "Understanding past search volume for keywords is essential for projecting future traffic (Page 37)."
+  },
+  {
+    id: 354,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "To analyze your competition, you should monitor their ___ ___.",
+    answer: "SEO maturity",
+    explanation: "Understanding a competitor's SEO maturity helps gauge how difficult it will be to compete with them for rankings (Page 38)."
+  },
+  {
+    id: 355,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "You shouldn't underestimate competitors because their SEO performance could ___ ___.",
+    answer: "change quickly",
+    explanation: "It's important not to underestimate competitors, as their SEO capabilities could improve rapidly with new investment or focus (Page 38)."
+  },
+  {
+    id: 356,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "Tools like Power BI and Google Data Studio are used for ___ ___.",
+    answer: "data visualization",
+    explanation: "Tools like Power BI or Google Data Studio are used for data visualization (viz) to make complex data easier to understand (Page 39)."
+  },
+  {
+    id: 357,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "The #1 organic position in Google has a dominant ___-___ ___.",
+    answer: "click-through rate",
+    explanation: "The graph on page 41 shows that the top position has a dominant click-through rate of 31.73%."
+  },
+  {
+    id: 358,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "The #2 organic position has a ___-___ ___ of 24.71%.",
+    answer: "click-through rate",
+    explanation: "The graph on page 41 shows the second position has a click-through rate of 24.71%."
+  },
+  {
+    id: 359,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "The final slide of the presentation is a ___ ___ slide.",
+    answer: "thank you",
+    explanation: "The presentation concludes with a thank you slide (Page 44)."
+  },
+  {
+    id: 360,
+    type: QuestionType.MULTI_WORD_BLANK,
+    question: "The Site Performance report breaks down issues into ___ and ___.",
+    answer: "Errors and Warnings",
+    explanation: "The Site Performance report on page 32 shows Performance Issues which are broken down into Errors and Warnings."
   },
 
   // =============================================
@@ -1780,5 +2347,5 @@ export const quizData: Question[] = [
     question: "What is the main takeaway from the 'Advanced Web Ranking' industry CTR chart?",
     answer: ["Different industries have different CTR curves", "Hobbies & Interests has a high CTR"],
     explanation: "The chart on page 42 shows that CTR performance varies significantly by industry. For example, 'Hobbies & Interests' has a much higher CTR for top positions compared to 'Real Estate'."
-  },
+  }
 ];
