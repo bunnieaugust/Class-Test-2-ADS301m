@@ -29,6 +29,8 @@ type MistakeCounts = {
     [key in QuestionType]?: { [key: string]: number }
 }
 
+const SESSION_STORAGE_KEY = 'ads301mQuizSession';
+const DARK_MODE_KEY = 'ads301mDarkMode';
 
 // Main Application Component
 export default function App() {
@@ -56,9 +58,81 @@ export default function App() {
   const [quizType, setQuizType] = useState<QuestionType | 'ALL' | null>(null);
   const [quizResults, setQuizResults] = useState({ correct: 0, total: 0 });
   const [hasStoredMistakes, setHasStoredMistakes] = useState(false);
+  const [practiceSessionTotal, setPracticeSessionTotal] = useState(0);
 
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    try {
+        const item = window.localStorage.getItem(DARK_MODE_KEY);
+        return item ? JSON.parse(item) : false;
+    } catch (error) {
+        return false;
+    }
+  });
   const [isShaking, setIsShaking] = useState(false);
+
+  // Load state from localStorage on initial component mount
+  useEffect(() => {
+    try {
+        const savedSession = localStorage.getItem(SESSION_STORAGE_KEY);
+        if (savedSession) {
+            const state = JSON.parse(savedSession);
+            setGameMode(state.gameMode);
+            setQuestions(state.questions);
+            setCurrentQuestionIndex(state.currentQuestionIndex);
+            setUserAnswers(state.userAnswers);
+            setIsAnswered(state.isAnswered);
+            setAttemptStatus(state.attemptStatus);
+            setCorrectCount(state.correctCount);
+            setCorrectForBonus(state.correctForBonus);
+            setBonusCharges(state.bonusCharges);
+            setIncorrectForLockdown(state.incorrectForLockdown);
+            setIsLockdownActive(state.isLockdownActive);
+            setLockdownMistakes(state.lockdownMistakes);
+            setIncorrectlyAnswered(state.incorrectlyAnswered);
+            setQuizBackup(state.quizBackup);
+            setQuizTitle(state.quizTitle);
+            setQuizType(state.quizType);
+            setPracticeSessionTotal(state.practiceSessionTotal || 0);
+        }
+    } catch (error) {
+        console.error("Failed to load quiz session:", error);
+        localStorage.removeItem(SESSION_STORAGE_KEY);
+    }
+  }, []);
+
+  // Save state to localStorage whenever it changes while in a quiz
+  useEffect(() => {
+    if (gameMode === GameMode.QUIZ) {
+        const sessionToSave = {
+            gameMode,
+            questions,
+            currentQuestionIndex,
+            userAnswers,
+            isAnswered,
+            attemptStatus,
+            correctCount,
+            correctForBonus,
+            bonusCharges,
+            incorrectForLockdown,
+            isLockdownActive,
+            lockdownMistakes,
+            incorrectlyAnswered,
+            quizBackup,
+            quizTitle,
+            quizType,
+            practiceSessionTotal,
+        };
+        localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(sessionToSave));
+    } else {
+        // Clean up session storage if not in a quiz (e.g., on home screen or results)
+        localStorage.removeItem(SESSION_STORAGE_KEY);
+    }
+  }, [
+    gameMode, questions, currentQuestionIndex, userAnswers, isAnswered, attemptStatus, 
+    correctCount, correctForBonus, bonusCharges, incorrectForLockdown, isLockdownActive, 
+    lockdownMistakes, incorrectlyAnswered, quizBackup, quizTitle, quizType, practiceSessionTotal
+  ]);
+
 
   const getMistakeCounts = useCallback((): MistakeCounts => {
     try {
@@ -84,8 +158,10 @@ export default function App() {
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add('dark');
+      localStorage.setItem(DARK_MODE_KEY, JSON.stringify(true));
     } else {
       document.documentElement.classList.remove('dark');
+      localStorage.setItem(DARK_MODE_KEY, JSON.stringify(false));
     }
   }, [isDarkMode]);
 
@@ -215,7 +291,10 @@ export default function App() {
       setAttemptStatus('idle');
       setIsAnswered(false);
       setLockdownMistakes([]);
-      setQuizTitle(`🚨 Lockdown: ${newLockdownQuestions.length} left 🚨`);
+      const newTitle = quizBackup 
+        ? `🚨 Lockdown: ${newLockdownQuestions.length} left 🚨`
+        : `💪 Practice: ${newLockdownQuestions.length} left 💪`;
+      setQuizTitle(newTitle);
     } else {
       endLockdown();
     }
@@ -272,7 +351,19 @@ export default function App() {
   }, [questions, currentQuestionIndex, userAnswers, correctCount, correctForBonus, bonusCharges, incorrectForLockdown, incorrectlyAnswered, quizTitle]);
 
   const endLockdown = () => {
-    if (!quizBackup) { goHome(); return; }
+    if (!quizBackup) { // This is a standalone practice session, show results.
+        setQuizResults({ correct: practiceSessionTotal, total: practiceSessionTotal });
+        setGameMode(GameMode.RESULTS);
+
+        // Clean up state
+        setIsLockdownActive(false);
+        setIncorrectlyAnswered([]); // Mastered!
+        setIncorrectForLockdown(0); 
+        setLockdownMistakes([]);
+        setPracticeSessionTotal(0);
+        setQuizBackup(null);
+        return;
+    }
 
     setQuestions(quizBackup.questions);
     setUserAnswers(quizBackup.userAnswers);
@@ -343,10 +434,16 @@ export default function App() {
  const startRetryIncorrectQuiz = () => {
     if (incorrectlyAnswered.length === 0) return;
     const retryQuestions = [...incorrectlyAnswered].sort(() => Math.random() - 0.5);
+    
+    setPracticeSessionTotal(retryQuestions.length);
     setQuestions(retryQuestions);
     setGameMode(GameMode.QUIZ);
     resetState(retryQuestions.length);
-    setQuizTitle("Retry Incorrect");
+    
+    setIsLockdownActive(true);
+    setLockdownMistakes([]);
+    setQuizBackup(null);
+    setQuizTitle("💪 Practice Mode 💪");
     setQuizType(quizType);
   };
   
@@ -358,8 +455,6 @@ export default function App() {
     for (const type of Object.keys(counts) as Array<keyof typeof counts>) {
         const typeCounts = counts[type];
         if (typeCounts) {
-            // FIX: The `Object.entries` method returns `[string, unknown][]` for values from `JSON.parse`.
-            // Casting the result to `[string, number][]` ensures type compatibility with `allMistakes`.
             allMistakes.push(...(Object.entries(typeCounts) as [string, number][]));
         }
     }
@@ -385,8 +480,6 @@ export default function App() {
     const typeCounts = allCounts[type];
     if (!typeCounts || Object.keys(typeCounts).length === 0) return;
 
-    // FIX: Explicitly cast `a` and `b` to `number` to perform the sort operation.
-    // The type was being inferred as `unknown` because the data originates from `JSON.parse`.
     const sortedMistakes = Object.entries(typeCounts).sort(([, a], [, b]) => (b as number) - (a as number));
     const toughestIds = sortedMistakes.slice(0, 10).map(([id]) => parseInt(id, 10));
     
@@ -412,7 +505,7 @@ export default function App() {
     const counts = getMistakeCounts();
     const typeCounts = counts[quizType];
     return !!typeCounts && Object.keys(typeCounts).length > 0;
-  }, [quizType, getMistakeCounts, gameMode]);
+  }, [quizType, getMistakeCounts]);
 
 
   return (
