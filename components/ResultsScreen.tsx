@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { SparklesIcon, BackIcon } from './Icons';
+import { QuestionType } from '../types';
 
 type ResultsScreenProps = {
     key?: string;
@@ -8,9 +9,12 @@ type ResultsScreenProps = {
     onRetry: () => void;
     results: { correct: number, total: number };
     hasIncorrect: boolean;
+    quizType: QuestionType | 'ALL' | null;
+    onStartToughestQuiz: (type: QuestionType) => void;
+    hasToughestMistakes: boolean;
 };
 
-export const ResultsScreen = ({ onHome, onRetry, results, hasIncorrect }: ResultsScreenProps) => {
+export const ResultsScreen = ({ onHome, onRetry, results, hasIncorrect, quizType, onStartToughestQuiz, hasToughestMistakes }: ResultsScreenProps) => {
     const percentage = results.total > 0 ? Math.round((results.correct / results.total) * 100) : 0;
     
     const getFeedback = () => {
@@ -49,6 +53,19 @@ export const ResultsScreen = ({ onHome, onRetry, results, hasIncorrect }: Result
                         whileTap={{ scale: 0.95 }}
                     >
                         Retry {results.total - results.correct} Incorrect Questions
+                    </motion.button>
+                )}
+                {hasToughestMistakes && quizType && quizType !== 'ALL' && (
+                     <motion.button
+                        onClick={() => onStartToughestQuiz(quizType)}
+                        className="w-full bg-purple-500 text-white font-bold py-3 px-6 rounded-2xl hover:bg-purple-600 transition-all transform hover:scale-105"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <div className="flex items-center justify-center gap-2">
+                            <SparklesIcon className="w-5 h-5" />
+                            <span>Practice Toughest 10</span>
+                        </div>
                     </motion.button>
                 )}
                 <motion.button

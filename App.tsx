@@ -1,6 +1,4 @@
 
-
-
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import { quizData } from './data/quizData';
@@ -27,6 +25,10 @@ export type QuizStateBackup = {
   quizTitle: string;
 };
 
+type MistakeCounts = {
+    [key in QuestionType]?: { [key: string]: number }
+}
+
 
 // Main Application Component
 export default function App() {
@@ -51,15 +53,14 @@ export default function App() {
   const [incorrectlyAnswered, setIncorrectlyAnswered] = useState<Question[]>([]);
   const [quizBackup, setQuizBackup] = useState<QuizStateBackup | null>(null);
   const [quizTitle, setQuizTitle] = useState('');
+  const [quizType, setQuizType] = useState<QuestionType | 'ALL' | null>(null);
   const [quizResults, setQuizResults] = useState({ correct: 0, total: 0 });
   const [hasStoredMistakes, setHasStoredMistakes] = useState(false);
 
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
 
-  // FIX: Changed return type to use a string index signature `[key: string]` because JSON.parse will always produce string keys.
-  // This allows TypeScript to correctly infer types for `Object.entries` later on, resolving the arithmetic error.
-  const getMistakeCounts = useCallback((): { [key: string]: number } => {
+  const getMistakeCounts = useCallback((): MistakeCounts => {
     try {
       const counts = localStorage.getItem('ads301mMistakeCounts');
       return counts ? JSON.parse(counts) : {};
@@ -69,9 +70,13 @@ export default function App() {
     }
   }, []);
   
-  const incrementMistakeCount = useCallback((questionId: number) => {
+  const incrementMistakeCount = useCallback((questionId: number, questionType: QuestionType) => {
       const counts = getMistakeCounts();
-      counts[questionId] = (counts[questionId] || 0) + 1;
+      if (!counts[questionType]) {
+          counts[questionType] = {};
+      }
+      const typeCounts = counts[questionType]!;
+      typeCounts[String(questionId)] = (typeCounts[String(questionId)] || 0) + 1;
       localStorage.setItem('ads301mMistakeCounts', JSON.stringify(counts));
       setHasStoredMistakes(true);
   }, [getMistakeCounts]);
@@ -120,6 +125,7 @@ export default function App() {
     setGameMode(GameMode.QUIZ);
     resetState(selectedQuestions.length);
     setQuizTitle(name);
+    setQuizType(type);
   };
   
   const startReview = () => {
@@ -143,6 +149,7 @@ export default function App() {
   
   const goHome = () => {
     setGameMode(GameMode.HOME);
+    setQuizType(null);
   };
   
   const handleAnswer = (answer: string) => {
@@ -179,7 +186,7 @@ export default function App() {
     } else { // Incorrect Answer
         setIsShaking(true);
         setTimeout(() => setIsShaking(false), 500);
-        incrementMistakeCount(currentQuestion.id);
+        incrementMistakeCount(currentQuestion.id, currentQuestion.type);
 
         if (isLockdownActive) {
             if (!lockdownMistakes.some(q => q.id === currentQuestion.id)) {
@@ -259,7 +266,7 @@ export default function App() {
         setLockdownMistakes([]);
         setQuizTitle("🚨 Lockdown Mode 🚨");
     } else {
-        setBonusCharges(prev => prev -1);
+        setBonusCharges(prev => prev - 1);
         setQuizTitle("✨ Bonus Round ✨");
     }
   }, [questions, currentQuestionIndex, userAnswers, correctCount, correctForBonus, bonusCharges, incorrectForLockdown, incorrectlyAnswered, quizTitle]);
@@ -294,35 +301,44 @@ export default function App() {
   const endBonus = () => {
     if (!quizBackup) { goHome(); return; }
    
-   const correctlyAnsweredInBonusIds = new Set<number>();
-   questions.forEach((q, index) => {
-       const ans = userAnswers[index];
-       if (ans) {
-           const isCorrect = Array.isArray(q.answer)
-               ? q.answer.some(a => a.toLowerCase() === ans.toLowerCase().trim())
-               : q.answer.toLowerCase() === ans.toLowerCase().trim();
-           if (isCorrect) {
-               correctlyAnsweredInBonusIds.add(q.id);
-           }
-       }
-   });
+    const correctlyAnsweredInBonusIds = new Set<number>();
+    questions.forEach((q, index) => {
+        const ans = userAnswers[index];
+        if (ans) {
+            const isCorrect = Array.isArray(q.answer)
+                ? q.answer.some(a => a.toLowerCase() === ans.toLowerCase().trim())
+                : q.answer.toLowerCase() === ans.toLowerCase().trim();
+            if (isCorrect) {
+                correctlyAnsweredInBonusIds.add(q.id);
+            }
+        }
+    });
 
-   setQuestions(quizBackup.questions);
-   setCurrentQuestionIndex(quizBackup.index);
-   setUserAnswers(quizBackup.userAnswers);
-   setCorrectCount(quizBackup.correctCount);
-   setCorrectForBonus(quizBackup.correctForBonus);
-   setBonusCharges(quizBackup.bonusCharges);
-   setQuizTitle(quizBackup.quizTitle);
-   
-   const updatedIncorrectlyAnswered = quizBackup.incorrectlyAnswered.filter(
-       q => !correctlyAnsweredInBonusIds.has(q.id)
-   );
-   setIncorrectlyAnswered(updatedIncorrectlyAnswered);
-   setIncorrectForLockdown(updatedIncorrectlyAnswered.length);
-   
-   setQuizBackup(null);
- }
+    setQuestions(quizBackup.questions);
+    setUserAnswers(quizBackup.userAnswers);
+    setCorrectCount(quizBackup.correctCount);
+    setCorrectForBonus(quizBackup.correctForBonus);
+    setBonusCharges(quizBackup.bonusCharges);
+    setQuizTitle(quizBackup.quizTitle);
+    
+    const updatedIncorrectlyAnswered = quizBackup.incorrectlyAnswered.filter(
+        q => !correctlyAnsweredInBonusIds.has(q.id)
+    );
+    setIncorrectlyAnswered(updatedIncorrectlyAnswered);
+    setIncorrectForLockdown(updatedIncorrectlyAnswered.length);
+    
+    const nextIndex = quizBackup.index + 1;
+    setQuizBackup(null);
+
+    if (nextIndex < quizBackup.questions.length) {
+        setCurrentQuestionIndex(nextIndex);
+        setIsAnswered(false);
+        setAttemptStatus('idle');
+    } else {
+        setQuizResults({ correct: quizBackup.correctCount, total: quizBackup.questions.length });
+        setGameMode(GameMode.RESULTS);
+    }
+  }
 
  const startRetryIncorrectQuiz = () => {
     if (incorrectlyAnswered.length === 0) return;
@@ -331,13 +347,26 @@ export default function App() {
     setGameMode(GameMode.QUIZ);
     resetState(retryQuestions.length);
     setQuizTitle("Retry Incorrect");
+    setQuizType(quizType);
   };
   
   const startToughestQuiz = () => {
     const counts = getMistakeCounts();
     if (Object.keys(counts).length === 0) return;
   
-    const sortedMistakes = Object.entries(counts).sort(([, a], [, b]) => b - a);
+    const allMistakes: [string, number][] = [];
+    for (const type of Object.keys(counts) as Array<keyof typeof counts>) {
+        const typeCounts = counts[type];
+        if (typeCounts) {
+            // FIX: The `Object.entries` method returns `[string, unknown][]` for values from `JSON.parse`.
+            // Casting the result to `[string, number][]` ensures type compatibility with `allMistakes`.
+            allMistakes.push(...(Object.entries(typeCounts) as [string, number][]));
+        }
+    }
+
+    if (allMistakes.length === 0) return;
+
+    const sortedMistakes = allMistakes.sort(([, a], [, b]) => b - a);
     const toughestIds = sortedMistakes.slice(0, 10).map(([id]) => parseInt(id, 10));
     
     const toughestQuestions = quizData.filter(q => toughestIds.includes(q.id));
@@ -348,6 +377,28 @@ export default function App() {
     setGameMode(GameMode.QUIZ);
     resetState(toughestQuestions.length);
     setQuizTitle("Toughest 10 Practice");
+    setQuizType('ALL');
+  };
+  
+  const startToughestQuizForType = (type: QuestionType) => {
+    const allCounts = getMistakeCounts();
+    const typeCounts = allCounts[type];
+    if (!typeCounts || Object.keys(typeCounts).length === 0) return;
+
+    // FIX: Explicitly cast `a` and `b` to `number` to perform the sort operation.
+    // The type was being inferred as `unknown` because the data originates from `JSON.parse`.
+    const sortedMistakes = Object.entries(typeCounts).sort(([, a], [, b]) => (b as number) - (a as number));
+    const toughestIds = sortedMistakes.slice(0, 10).map(([id]) => parseInt(id, 10));
+    
+    const toughestQuestions = quizData.filter(q => toughestIds.includes(q.id));
+    
+    if (toughestQuestions.length === 0) return;
+  
+    setQuestions(toughestQuestions.sort(() => Math.random() - 0.5));
+    setGameMode(GameMode.QUIZ);
+    resetState(toughestQuestions.length);
+    setQuizTitle(`Toughest 10 - ${quizTitle}`);
+    setQuizType(type);
   };
 
   useEffect(() => {
@@ -355,6 +406,13 @@ export default function App() {
         startSpecialSession('LOCKDOWN');
     }
   }, [incorrectForLockdown, isLockdownActive, gameMode, quizBackup, startSpecialSession]);
+  
+  const hasToughestMistakesForType = useMemo(() => {
+    if (!quizType || quizType === 'ALL') return false;
+    const counts = getMistakeCounts();
+    const typeCounts = counts[quizType];
+    return !!typeCounts && Object.keys(typeCounts).length > 0;
+  }, [quizType, getMistakeCounts, gameMode]);
 
 
   return (
@@ -395,6 +453,9 @@ export default function App() {
                   onRetry={startRetryIncorrectQuiz}
                   results={quizResults}
                   hasIncorrect={incorrectlyAnswered.length > 0}
+                  quizType={quizType}
+                  onStartToughestQuiz={startToughestQuizForType}
+                  hasToughestMistakes={hasToughestMistakesForType}
                 />
             )}
             {gameMode === GameMode.QUIZ && currentQuestion && (
